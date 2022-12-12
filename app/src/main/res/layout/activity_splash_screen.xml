@@ -19,7 +19,7 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/demo_user_pic"
+            android:src="@drawable/demo_user"
             />
 
         <LinearLayout
@@ -52,6 +52,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/splash_image_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -59,6 +60,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Developed By : Team Scammer101"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        android:textAlignment="center"
+        android:fontFamily="monospace"
+        android:textColor="@color/black"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

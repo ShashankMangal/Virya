@@ -10,4 +10,5 @@
 
     <color name="themeLightGreen">#EAFDDD</color>
     <color name="themeLightBlue">#BFF2EE</color>
+    <color name="themeDarkBlue">#03A9F4</color>
 </resources>

@@ -46,7 +46,7 @@ public class SplashScreen extends AppCompatActivity {
                 {
                     if(auth.getCurrentUser()!=null)
                     {
-                        Intent intent = new Intent(SplashScreen.this, NumberScreen.class);
+                        Intent intent = new Intent(SplashScreen.this, MainScreen.class);
 //                        intent.putExtra("frag",3);
                         startActivity(intent);
                     }

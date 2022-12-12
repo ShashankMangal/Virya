@@ -20,7 +20,7 @@ class NumberScreen : AppCompatActivity() {
         init()
         if(auth.currentUser!=null)
         {
-            startActivity(Intent(this, OTPScreen::class.java))
+            startActivity(Intent(this, MainScreen::class.java))
             finish()
         }
 
