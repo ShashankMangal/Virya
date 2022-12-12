@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.EventListener
@@ -157,7 +159,7 @@ class OTPScreen : AppCompatActivity() {
                 map["ban"] = false
 
 
-                query = firestore.collection("Users").whereEqualTo("phoneNumber", number)
+                query = firestore.collection("Users").whereEqualTo("contact", number)
                 query!!.addSnapshotListener(EventListener<QuerySnapshot?> { value, error ->
                     if (!value!!.isEmpty) {
                         val intent = Intent(this@OTPScreen, MainScreen::class.java)
@@ -192,7 +194,9 @@ class OTPScreen : AppCompatActivity() {
             }
         }
         threadOTP = Thread(runnableOTP)
+
         threadOTP!!.start()
+
     }
 
 
