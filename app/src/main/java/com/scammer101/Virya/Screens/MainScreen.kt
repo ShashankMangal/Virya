@@ -20,10 +20,8 @@ class MainScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         init()
         setListeners()
-
     }
 
 
@@ -31,7 +29,7 @@ class MainScreen : AppCompatActivity() {
 
         setStatusBarColor(Color.parseColor("#EAFDDD"))
         binding.bottomNavigation.setItemSelected(R.id.home)
-        //firstReplacementFragment()
+        firstReplacementFragment(HomeFragment())
         binding.bottomNavigation.showBadge(R.id.home)
         binding.bottomNavigation.showBadge(R.id.goals, 10)
     }
