@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.scammer101.Virya.Fragments.GoalsFragment
+import com.scammer101.Virya.Fragments.HomeFragment
 import com.scammer101.Virya.R
 import com.scammer101.Virya.databinding.ActivityMainScreenBinding
 
@@ -41,7 +42,7 @@ class MainScreen : AppCompatActivity() {
             when (it) {
 
                 R.id.home -> {
-                    Toast.makeText(this@MainScreen, "", Toast.LENGTH_SHORT).show()
+                    replaceFragment(HomeFragment())
                 }
                 R.id.goals -> {
                     replaceFragment(GoalsFragment())
