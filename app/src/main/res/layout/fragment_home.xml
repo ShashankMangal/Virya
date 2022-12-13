@@ -22,7 +22,9 @@
             android:layout_height="match_parent"
             android:text="Day 7"
             android:textSize="40sp"
-            android:fontFamily="@font/ocra_regular"/>
+            android:fontFamily="@font/ocra_regular"
+            android:layout_margin="5dp"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/daysRecyclerView"
             android:layout_width="match_parent"
