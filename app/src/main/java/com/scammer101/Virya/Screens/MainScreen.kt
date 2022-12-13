@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.scammer101.Virya.Fragments.GoalsFragment
 import com.scammer101.Virya.R
 import com.scammer101.Virya.databinding.ActivityMainScreenBinding
 
@@ -20,6 +21,7 @@ class MainScreen : AppCompatActivity() {
         setContentView(binding.root)
 
         init()
+        setListeners()
 
     }
 
@@ -31,6 +33,26 @@ class MainScreen : AppCompatActivity() {
         //firstReplacementFragment()
         binding.bottomNavigation.showBadge(R.id.home)
         binding.bottomNavigation.showBadge(R.id.goals, 10)
+    }
+
+    private fun setListeners()
+    {
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it) {
+
+                R.id.home -> {
+                    Toast.makeText(this@MainScreen, "", Toast.LENGTH_SHORT).show()
+                }
+                R.id.goals -> {
+                    replaceFragment(GoalsFragment())
+
+                }
+                R.id.profile -> {
+                    Toast.makeText(this@MainScreen, "", Toast.LENGTH_SHORT).show()
+                    }
+            }
+
+    }
     }
 
     private fun replaceFragment(fragment : Fragment)
