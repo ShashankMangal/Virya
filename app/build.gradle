@@ -23,7 +23,6 @@ android {
                 viewBinding true
             }
 
-
     buildTypes {
         release {
             minifyEnabled false
@@ -50,4 +49,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
+
 }
