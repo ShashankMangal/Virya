@@ -382,4 +382,34 @@
         android:background="@drawable/add_round_background"
         />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/change_current_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
+        app:layout_constraintStart_toStartOf="@id/weight_layout"
+        app:layout_constraintEnd_toEndOf="@id/weight_layout"
+        app:layout_constraintBottom_toTopOf="@id/weight_layout"
+        android:layout_margin="16dp"
+        app:boxStrokeColor="@color/themeDarkBlue"
+        app:hintTextColor="@color/themeDarkBlue"
+        android:textColorHint="@color/themeDarkBlue"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/current_weight_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Current Weight"
+            android:inputType="numberDecimal"
+            android:maxLength="6"
+            android:singleLine="true"
+            android:textColorHint="@color/themeDarkBlue"
+            android:textColor="@color/black"
+            android:fontFamily="@font/airbnb_cereal_medium"
+            android:textCursorDrawable="@drawable/custom_cursor"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
