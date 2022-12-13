@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.scammer101.Virya.adapters.HomeDaysRecyclerAdapter
+import com.scammer101.Virya.adapters.HomePosesRecyclerAdapter
 import com.scammer101.Virya.databinding.FragmentHomeBinding
 import java.util.*
 
@@ -26,6 +27,13 @@ class HomeFragment : Fragment() {
         }
         binding.daysRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         binding.daysRecyclerView.adapter = HomeDaysRecyclerAdapter(date)
+        binding.posesRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
+        binding.posesRecyclerView.adapter = HomePosesRecyclerAdapter()
+        binding.monthNyear.text = buildString {
+            append(Calendar.getInstance().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()).subSequence(0, 3))
+            append(" ")
+            append(Calendar.getInstance().get(Calendar.YEAR))
+        }
 
         if(date>5){
             binding.daysRecyclerView.scrollToPosition(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)-5)

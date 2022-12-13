@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.scammer101.Virya.R
+import java.util.*
 
 class HomeDaysRecyclerAdapter(date: Int) :RecyclerView.Adapter<HomeDaysRecyclerAdapter.HomeDaysViewHolder>() {
     var date = date
@@ -24,16 +25,21 @@ class HomeDaysRecyclerAdapter(date: Int) :RecyclerView.Adapter<HomeDaysRecyclerA
     }
 
     override fun onBindViewHolder(holder: HomeDaysViewHolder, position: Int) {
-        holder.day.text = "Day"
-        holder.date.text = "${position + 1}"
-        if (position + 1 == date) {
+        var cal = Calendar.getInstance()
+        cal.set(Calendar.DAY_OF_MONTH, position+1)
+        holder.day.text = cal.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.SHORT, Locale.getDefault())!!.toString().subSequence(0,3)
+        holder.date.text = buildString { append(position + 1)}
+        if (position == Calendar.getInstance().get(Calendar.DAY_OF_MONTH)-1) {
             holder.background.setCardBackgroundColor(holder.background.context.getColor(R.color.black))
             holder.day.setTextColor(holder.itemView.context.getColor(R.color.white))
+        }else{
+            holder.background.setCardBackgroundColor(holder.background.context.getColor(R.color.white))
+            holder.day.setTextColor(holder.itemView.context.getColor(R.color.black))
         }
     }
 
     override fun getItemCount(): Int {
-        return  31
+        return Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)
     }
 
 }
