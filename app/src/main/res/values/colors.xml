@@ -11,4 +11,6 @@
     <color name="themeLightGreen">#EAFDDD</color>
     <color name="themeLightBlue">#BFF2EE</color>
     <color name="themeDarkBlue">#03A9F4</color>
+    <color name="previewColor">#2e2d3b</color>
+    <color name="previewColorLight">#CC2E2D3B</color>
 </resources>

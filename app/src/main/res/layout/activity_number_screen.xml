@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/theme_background"
+    android:background="@color/previewColorLight"
     tools:context=".Screens.NumberScreen">
 
     <View
@@ -15,18 +15,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/white"
+
         />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:layout_constraintStart_toStartOf="@id/numberView"
-        app:layout_constraintEnd_toEndOf="@id/numberView"
-        app:layout_constraintTop_toTopOf="@id/numberView"
-        app:layout_constraintBottom_toBottomOf="@id/numberView"
         android:src="@drawable/number_asset"
-        />
+        app:layout_constraintBottom_toBottomOf="@id/numberView"
+        app:layout_constraintEnd_toEndOf="@id/numberView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/numberView"
+        app:layout_constraintTop_toTopOf="@id/numberView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
         app:layout_constraintTop_toBottomOf="@id/numberView"
         android:layout_marginTop="30dp"
         android:text="VERIFY YOUR MOBILE NUMBER"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:fontFamily="@font/airbnb_cereal_medium"
         android:textSize="19sp"
         android:id="@+id/verifyText"
@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/verifyText"
         android:layout_marginTop="3dp"
         android:text="WE WILL SEND OTP ON YOUR NUMBER TO VERIFY"
-        android:textColor="#3F51B5"
+        android:textColor="@color/themeLightGreen"
         android:fontFamily="@font/helvetica_regular"
         android:textStyle="bold"
         android:textSize="10sp"
