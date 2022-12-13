@@ -23,6 +23,13 @@
             android:text="Day 7"
             android:textSize="40sp"
             android:fontFamily="@font/ocra_regular"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/daysRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_day_recyclerview"
+            tools:itemCount="1"/>
 
     </LinearLayout>
 

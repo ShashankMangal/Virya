@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.scammer101.Virya.R
+import com.scammer101.Virya.adapters.HomeDaysRecyclerAdapter
 import com.scammer101.Virya.databinding.ActivityMainScreenBinding
 import com.scammer101.Virya.databinding.FragmentHomeBinding
 import java.util.*
@@ -24,6 +25,9 @@ class HomeFragment : Fragment() {
             append("Day ")
             append(getDay())
         }
+
+        binding.daysRecyclerView.adapter = HomeDaysRecyclerAdapter()
+
         return binding.root
     }
 
