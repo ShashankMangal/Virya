@@ -27,9 +27,33 @@ class MainScreen : AppCompatActivity() {
     private fun init() {
 
         setStatusBarColor(Color.parseColor("#EAFDDD"))
-        binding.bottomNavigation.setItemEnabled(R.id.home, true)
+        binding.bottomNavigation.setItemSelected(R.id.home)
+        //firstReplacementFragment()
         binding.bottomNavigation.showBadge(R.id.home)
         binding.bottomNavigation.showBadge(R.id.goals, 10)
+    }
+
+    private fun replaceFragment(fragment : Fragment)
+    {
+        try{
+            val fragmentManager = supportFragmentManager
+            val fragmentTransaction = fragmentManager.beginTransaction()
+            fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.slide_out_right)
+            fragmentTransaction.replace(R.id.fragment_container, fragment)
+            fragmentTransaction.commit()
+        } catch (e: Exception) {
+            Toast.makeText(this@MainScreen, "Error : " + e.message, Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
+
+    private fun firstReplacementFragment(fragment : Fragment)
+    {
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.commit()
     }
 
     fun Activity.setStatusBarColor(color: Int) {
