@@ -14,4 +14,5 @@
     <color name="previewColor">#2e2d3b</color>
     <color name="previewColorLight">#CC2E2D3B</color>
     <color name="green">#25970A</color>
+    <color name="greenLight">#48EC22</color>
 </resources>

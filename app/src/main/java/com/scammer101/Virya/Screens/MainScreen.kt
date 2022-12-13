@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.scammer101.Virya.Fragments.GoalsFragment
 import com.scammer101.Virya.Fragments.HomeFragment
+import com.scammer101.Virya.Fragments.ProfileFragment
 import com.scammer101.Virya.R
 import com.scammer101.Virya.databinding.ActivityMainScreenBinding
 
@@ -26,7 +27,6 @@ class MainScreen : AppCompatActivity() {
 
 
     private fun init() {
-
         setStatusBarColor(Color.parseColor("#EAFDDD"))
         binding.bottomNavigation.setItemSelected(R.id.home)
         firstReplacementFragment(HomeFragment())
@@ -41,13 +41,15 @@ class MainScreen : AppCompatActivity() {
 
                 R.id.home -> {
                     replaceFragment(HomeFragment())
+                    setStatusBarColor(Color.parseColor("#EAFDDD"))
                 }
                 R.id.goals -> {
                     replaceFragment(GoalsFragment())
-
+                    setStatusBarColor(Color.parseColor("#EAFDDD"))
                 }
                 R.id.profile -> {
-                    Toast.makeText(this@MainScreen, "", Toast.LENGTH_SHORT).show()
+                    replaceFragment(ProfileFragment())
+                    setStatusBarColor(Color.parseColor("#ffffff"))
                     }
             }
 
