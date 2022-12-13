@@ -44,6 +44,7 @@
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/goals_success_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,13 +117,11 @@
             </LinearLayout>
 
 
-
-
         </LinearLayout>
 
         <ProgressBar
             android:id="@+id/goals_progress_bar"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginTop="5dp"
             android:max="100"
@@ -136,13 +135,103 @@
             android:scaleY="3"
             />
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--           -->
-
-<!--            />-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/goals_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/goals_progress_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="3dp"
+            tools:listitem="@layout/goals_asanas_item_view"
+            tools:itemCount="3"
+            android:layout_marginBottom="40dp"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/goals_share_success"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/goal_share_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/goals_success_layout"
+        app:layout_constraintBottom_toBottomOf="@id/goals_success_layout"
+        android:text="Share Success"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:fontFamily="@font/airbnb_cereal_medium"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/goals_share_success"
+        android:layout_margin="15dp"
+        android:background="@drawable/custom_goal_background"
+        android:gravity="center_vertical"
+        >
+
+        <ImageView
+            android:id="@+id/edit_custom"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/custom_edit_asset"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/edit_custom"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Custom Goal"
+                android:fontFamily="@font/airbnb_cereal_medium"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Practice"
+                android:fontFamily="@font/airbnb_cereal_medium"
+                android:textColor="@color/previewColorLight"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/custom_goal_next"
+            android:layout_marginEnd="10dp"
+            />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
