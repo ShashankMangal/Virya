@@ -39,6 +39,7 @@ class HomeDaysRecyclerAdapter(date: Int) :RecyclerView.Adapter<HomeDaysRecyclerA
             holder.day.setTextColor(holder.itemView.context.getColor(R.color.black))
         }
         var date = DateFormat.getDateInstance(DateFormat.DEFAULT).format(cal.time)
+        holder.itemView.setOnClickListener {  }
     }
 
     override fun getItemCount(): Int {

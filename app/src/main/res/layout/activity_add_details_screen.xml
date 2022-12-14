@@ -80,6 +80,7 @@
                 android:fontFamily="@font/airbnb_cereal_medium"
                 />
             <EditText
+                android:id="@+id/details_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Demo user"
@@ -108,6 +109,7 @@
                 android:fontFamily="@font/airbnb_cereal_medium"
                 />
             <EditText
+                android:id="@+id/details_dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="19.01.2000"
@@ -137,6 +139,7 @@
                 android:fontFamily="@font/airbnb_cereal_medium"
                 />
             <EditText
+                android:id="@+id/details_start_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="46.52"
@@ -166,6 +169,7 @@
                 android:fontFamily="@font/airbnb_cereal_medium"
                 />
             <EditText
+                android:id="@+id/details_height"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="46.52"
@@ -195,6 +199,7 @@
                 android:fontFamily="@font/airbnb_cereal_medium"
                 />
             <EditText
+                android:id="@+id/details_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="male, female,  non-binary"
@@ -224,6 +229,7 @@
                 android:fontFamily="@font/airbnb_cereal_medium"
                 />
             <EditText
+                android:id="@+id/details_goal_weight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="56.25"

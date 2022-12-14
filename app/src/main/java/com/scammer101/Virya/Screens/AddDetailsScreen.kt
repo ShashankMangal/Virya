@@ -4,12 +4,20 @@ import android.app.Activity
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.scammer101.Virya.Models.DailyYogaModel
+import com.scammer101.Virya.Models.UserModel
 import com.scammer101.Virya.databinding.ActivityAddDetailsScreenBinding
 
 class AddDetailsScreen : AppCompatActivity() {
 
     private lateinit var binding : ActivityAddDetailsScreenBinding
+    private lateinit var firestore : FirebaseFirestore
+    private var userModel: UserModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +32,8 @@ class AddDetailsScreen : AppCompatActivity() {
     private fun init()
     {
         setStatusBarColor(Color.parseColor("#ffffff"))
+        firestore = FirebaseFirestore.getInstance()
+        getUserData()
     }
 
     private fun setListeners()
@@ -31,6 +41,26 @@ class AddDetailsScreen : AppCompatActivity() {
         binding.profileDetailsBackButton.setOnClickListener{onBackPressed()}
     }
 
+    private fun getUserData() {
+        firestore.collection("Users").document(FirebaseAuth.getInstance().uid.toString()).get()
+            .addOnSuccessListener { doc ->
+                try {
+                    userModel = doc.toObject(UserModel::class.java)
+                    binding.detailsUserName.hint = userModel!!.name.toString()
+                    binding.detailsDob.hint = userModel!!.dob.toString()
+                    binding.detailsGoalWeight.hint = userModel!!.goalWeight.toString()
+                    binding.detailsStartWeight.hint = userModel!!.startWeight.toString()
+                    binding.detailsHeight.hint = userModel!!.height.toString()
+                    binding.detailsGender.hint = userModel!!.gender.toString()
+                } catch (e: Exception) {
+                   Toast.makeText(applicationContext, "Error:"+e.message,Toast.LENGTH_SHORT).show()
+
+                }
+
+            }
+
+
+    }
 
     fun Activity.setStatusBarColor(color: Int) {
         var flags = window?.decorView?.systemUiVisibility // get current flag
