@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.HomeFragment">
     <ScrollView
         android:layout_width="match_parent"
@@ -50,16 +51,205 @@
                 android:orientation="horizontal"
                 tools:listitem="@layout/item_day_recyclerview"
                 tools:itemCount="1"/>
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
-            </LinearLayout>
+                android:layout_height="180dp"
+                android:orientation="horizontal"
+                >
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/finished_cardview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:layout_marginStart="30dp"
+                        >
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="💪 Finished"
+                            android:layout_marginBottom="11dp"
+                            android:fontFamily="@font/airbnb_cereal_medium"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:textStyle="normal"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="12"
+                            android:fontFamily="@font/airbnb_cereal_medium"
+                            android:textColor="@color/black"
+                            android:textSize="38sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Completed\nYoga"
+                            android:textAlignment="center"
+                            android:fontFamily="@font/segoe_ui"
+                            android:textColor="@color/previewColorLight"
+                            android:textSize="13sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toEndOf="@id/finished_cardview"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="20dp"
+
+                        >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="10dp"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="🤸️ In progress"
+                                android:layout_marginBottom="11dp"
+                                android:fontFamily="@font/airbnb_cereal_medium"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="normal"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_gravity="center"
+                                >
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="2"
+                                    android:fontFamily="@font/airbnb_cereal_medium"
+                                    android:textColor="@color/black"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Yoga"
+                                    android:layout_marginStart="5dp"
+                                    android:textAlignment="center"
+                                    android:fontFamily="@font/segoe_ui"
+                                    android:textColor="@color/previewColorLight"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold"
+                                    android:layout_gravity="center"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="20dp"
+                        android:layout_marginTop="20dp"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="10dp"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="⌛ Time Spent"
+                                android:layout_marginBottom="11dp"
+                                android:fontFamily="@font/airbnb_cereal_medium"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"
+                                android:textStyle="normal"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_gravity="center"
+                                >
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="62"
+                                    android:fontFamily="@font/airbnb_cereal_medium"
+                                    android:textColor="@color/black"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold"
+                                    android:layout_gravity="center"
+                                    />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Minutes"
+                                    android:layout_marginStart="5dp"
+                                    android:textAlignment="center"
+                                    android:fontFamily="@font/segoe_ui"
+                                    android:textColor="@color/previewColorLight"
+                                    android:textSize="13sp"
+                                    android:textStyle="bold"
+                                    android:layout_gravity="center"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_margin = "10dp"
                 android:id="@+id/posesRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_poses_recyclerview"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
                 tools:itemCount="1"/>
 
