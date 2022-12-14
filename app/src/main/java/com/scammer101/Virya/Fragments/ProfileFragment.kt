@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.scammer101.Virya.Models.UserModel
 import com.scammer101.Virya.R
 import com.scammer101.Virya.Screens.AddDetailsScreen
+import com.scammer101.Virya.Screens.NumberScreen
 import com.scammer101.Virya.databinding.FragmentHomeBinding
 import com.scammer101.Virya.databinding.FragmentProfileBinding
 
@@ -24,13 +25,14 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var firestore : FirebaseFirestore
     private var userModel: UserModel? = null
+    private lateinit var auth : FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(layoutInflater)
-
+        auth = FirebaseAuth.getInstance()
         binding.profileAddDetail.setOnClickListener {
             var intent = Intent(context, AddDetailsScreen::class.java)
             startActivity(intent)
@@ -72,13 +74,13 @@ class ProfileFragment : Fragment() {
 
             }
 
+        binding.profileLogout.setOnClickListener{
+            auth.signOut()
+            var intent = Intent(context, NumberScreen::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
-    }
-
-    private fun getUserData() {
-
-
-
     }
 
 }
