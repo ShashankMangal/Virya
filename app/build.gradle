@@ -51,6 +51,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
     implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
     implementation 'com.android.volley:volley:1.2.1'
+    implementation 'com.github.bumptech.glide:glide:4.14.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
     //pose detection sdk
     implementation 'com.google.mlkit:pose-detection-accurate:18.0.0-beta3'

@@ -4,13 +4,17 @@ import android.app.Activity
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.scammer101.Virya.Models.DailyYogaModel
 import com.scammer101.Virya.Models.UserModel
+import com.scammer101.Virya.R
 import com.scammer101.Virya.databinding.ActivityAddDetailsScreenBinding
 
 class AddDetailsScreen : AppCompatActivity() {
@@ -39,6 +43,7 @@ class AddDetailsScreen : AppCompatActivity() {
     private fun setListeners()
     {
         binding.profileDetailsBackButton.setOnClickListener{onBackPressed()}
+        binding.detailsSaveButton.setOnClickListener { saveUserData() }
     }
 
     private fun getUserData() {
@@ -46,12 +51,19 @@ class AddDetailsScreen : AppCompatActivity() {
             .addOnSuccessListener { doc ->
                 try {
                     userModel = doc.toObject(UserModel::class.java)
-                    binding.detailsUserName.hint = userModel!!.name.toString()
-                    binding.detailsDob.hint = userModel!!.dob.toString()
-                    binding.detailsGoalWeight.hint = userModel!!.goalWeight.toString()
-                    binding.detailsStartWeight.hint = userModel!!.startWeight.toString()
-                    binding.detailsHeight.hint = userModel!!.height.toString()
-                    binding.detailsGender.hint = userModel!!.gender.toString()
+                    binding.detailsUserName.setText(userModel!!.name.toString())
+                    binding.detailsDob.setText(userModel!!.dob.toString())
+                    binding.detailsGoalWeight.setText(userModel!!.goalWeight.toString())
+                    binding.detailsStartWeight.setText(userModel!!.startWeight.toString())
+                    binding.detailsHeight.setText(userModel!!.height.toString())
+                    binding.detailsGender.setText(userModel!!.gender.toString())
+
+                    if(!userModel!!.profileImage.equals(""))
+                    {
+                        Glide.with(applicationContext).load(userModel!!.profileImage).thumbnail(
+                            Glide.with(applicationContext).load(R.drawable.spinner)).into(binding.detailProfileImage)
+                    }
+
                 } catch (e: Exception) {
                    Toast.makeText(applicationContext, "Error:"+e.message,Toast.LENGTH_SHORT).show()
 
@@ -60,6 +72,29 @@ class AddDetailsScreen : AppCompatActivity() {
             }
 
 
+    }
+
+    private fun saveUserData()
+    {
+        val name = binding.detailsUserName.text.toString()
+        val dob = binding.detailsDob.text.toString()
+        val startW = binding.detailsStartWeight.text.toString()
+        val height = binding.detailsHeight.text.toString()
+        val gender = binding.detailsGender.text.toString()
+        val goalW = binding.detailsGoalWeight.text.toString()
+
+        firestore.collection("Users")
+            .document(FirebaseAuth.getInstance().uid!!)
+            .update(mapOf(
+                "name" to name,
+                "dob" to dob,
+                "goalWeight" to goalW,
+                "startWeight" to startW,
+                "height" to height,
+                "gender" to gender,
+            ))
+        onBackPressed()
+        Toast.makeText(applicationContext, "User Profile Updated.", Toast.LENGTH_SHORT).show()
     }
 
     fun Activity.setStatusBarColor(color: Int) {

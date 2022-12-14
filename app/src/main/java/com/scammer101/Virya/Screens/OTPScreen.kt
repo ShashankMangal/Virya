@@ -183,12 +183,12 @@ class OTPScreen : AppCompatActivity() {
                 map["trainingCompleted"] = 0
                 map["totalTimeCompleted"] = 0
                 map["totalAsanasCompleted"] = 0
-                map["dob"] = "----------"
-                map["currentWeight"] = "00.00"
-                map["startWeight"] = "00.00"
-                map["goalWeight"] = "00.00"
-                map["height"] = "00.00"
-                map["gender"] = "------"
+                map["dob"] = ""
+                map["currentWeight"] = ""
+                map["startWeight"] = ""
+                map["goalWeight"] = ""
+                map["height"] = ""
+                map["gender"] = ""
 
 
                 query = firestore.collection("Users").whereEqualTo("contact", number)
