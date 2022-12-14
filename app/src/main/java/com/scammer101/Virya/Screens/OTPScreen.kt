@@ -179,6 +179,16 @@ class OTPScreen : AppCompatActivity() {
                 map["profileImage"] = ""
                 map["asanas"] = 0
                 map["ban"] = false
+                map["subscribe"] = false
+                map["trainingCompleted"] = 0
+                map["totalTimeCompleted"] = 0
+                map["totalAsanasCompleted"] = 0
+                map["dob"] = ""
+                map["currentWeight"] = ""
+                map["startWeight"] = ""
+                map["goalWeight"] = ""
+                map["height"] = ""
+                map["gender"] = ""
 
 
                 query = firestore.collection("Users").whereEqualTo("contact", number)
@@ -192,10 +202,6 @@ class OTPScreen : AppCompatActivity() {
                         firestore.collection("Users").document(user.uid).set(map)
                             .addOnCompleteListener {
                                 Handler(Looper.getMainLooper()).postDelayed({
-//                                    Toast.makeText(
-//                                        applicationContext,
-//                                        "Welcome : user$userName", Toast.LENGTH_SHORT
-//                                    ).show()
                                     Log.d("OTPActivity : ", "register")
                                     val intent = Intent(this@OTPScreen, MainScreen::class.java)
                                     startActivity(intent)

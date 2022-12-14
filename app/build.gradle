@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.android.gms:play-services-safetynet:18.0.1'
     implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
+    implementation 'com.android.volley:volley:1.2.1'
 }
