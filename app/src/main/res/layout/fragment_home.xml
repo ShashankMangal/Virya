@@ -92,7 +92,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/airbnb_cereal_medium"
-                            android:text="12"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -143,7 +143,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/airbnb_cereal_medium"
-                            android:text="2"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:textSize="30sp"
                             android:textStyle="bold" />
@@ -195,7 +195,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="@font/airbnb_cereal_medium"
-                            android:text="62"
+                            android:text="0"
                             android:textColor="@color/black"
                             android:textSize="30sp"
                             android:textStyle="bold" />
