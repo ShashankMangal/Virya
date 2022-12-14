@@ -226,16 +226,19 @@
                 />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_margin = "10dp"
+                android:layout_marginTop="10dp"
                 android:id="@+id/posesRecyclerView"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_poses_recyclerview"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
-                tools:itemCount="1"/>
+                tools:itemCount="3"/>
 
             <LinearLayout
+                android:layout_marginBottom="11dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
