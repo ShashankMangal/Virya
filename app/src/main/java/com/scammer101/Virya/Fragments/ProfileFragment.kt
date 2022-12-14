@@ -16,7 +16,6 @@ import com.scammer101.Virya.Models.UserModel
 import com.scammer101.Virya.R
 import com.scammer101.Virya.Screens.AddDetailsScreen
 import com.scammer101.Virya.Screens.NumberScreen
-import com.scammer101.Virya.databinding.FragmentHomeBinding
 import com.scammer101.Virya.databinding.FragmentProfileBinding
 
 

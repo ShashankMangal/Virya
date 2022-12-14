@@ -97,6 +97,7 @@ class HomeFragment : Fragment() {
                     ConstantsValues.KEY_DATE,
                     n + FirebaseAuth.getInstance().uid!!.toString()
                 )
+                preferenceManager!!.putString(ConstantsValues.KEY_DATE_ONLY, n)
                 checkLimit(n + FirebaseAuth.getInstance().uid!!.toString(), date.toString())
             }
         })
@@ -121,6 +122,8 @@ class HomeFragment : Fragment() {
                                 "finished" to 0,
                                 "inProgress" to 0,
                                 "timeSpent" to 0,
+                                "warriorCountPose" to 0,
+                                "warriorCountTimer" to 0,
                                 "date" to date
                             )
                         )
