@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.scammer101.Virya.R
+import java.text.DateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class HomeDaysRecyclerAdapter(date: Int) :RecyclerView.Adapter<HomeDaysRecyclerAdapter.HomeDaysViewHolder>() {
@@ -36,6 +38,7 @@ class HomeDaysRecyclerAdapter(date: Int) :RecyclerView.Adapter<HomeDaysRecyclerA
             holder.background.setCardBackgroundColor(holder.background.context.getColor(R.color.white))
             holder.day.setTextColor(holder.itemView.context.getColor(R.color.black))
         }
+        var date = DateFormat.getDateInstance(DateFormat.DEFAULT).format(cal.time)
     }
 
     override fun getItemCount(): Int {
