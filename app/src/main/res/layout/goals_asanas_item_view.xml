@@ -43,10 +43,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Asanas"
+            android:textAllCaps="true"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:fontFamily="@font/sitka_small"
-            android:textSize="27sp"
+            android:fontFamily="@font/segoe_ui"
+            android:textSize="25sp"
             android:layout_gravity="center"
             />
 

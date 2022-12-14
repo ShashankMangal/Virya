@@ -122,8 +122,12 @@ class HomeFragment : Fragment() {
                                 "finished" to 0,
                                 "inProgress" to 0,
                                 "timeSpent" to 0,
-                                "warriorCountPose" to 0,
-                                "warriorCountTimer" to 0,
+                                "warriorPoseCountPose" to 0,
+                                "warriorPoseCountTimer" to 0,
+                                "tPoseCountPose" to 0,
+                                "tPoseCountTimer" to 0,
+                                "treePoseCountPose" to 0,
+                                "treePoseCountTimer" to 0,
                                 "date" to date,
                                 "userAndDate" to date+FirebaseAuth.getInstance().uid.toString()
                             )

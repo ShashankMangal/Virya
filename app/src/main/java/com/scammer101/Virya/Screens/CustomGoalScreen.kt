@@ -45,24 +45,21 @@ class CustomGoalScreen : AppCompatActivity() {
 
     private fun setListener()
     {
-        val name = binding.customGoalYogaName.text.toString()
-        val repetition = binding.customGoalCount.text.toString()
-
-        binding.setGoalButton.setOnClickListener { setGoal(name, repetition) }
+        binding.setGoalButton.setOnClickListener { setGoal() }
     }
 
 
-    private fun setGoal(name : String, repeat : String)
+    private fun setGoal()
     {
         val map = HashMap<String, Any>()
         val date = preferenceManager!!.getString(ConstantsValues.KEY_DATE_ONLY)
         map["date"] = date
-        map["name"] = name
-        map["repeat"] = repeat
+        map["name"] = binding.customGoalYogaName.text.toString()
+        map["repeat"] = binding.customGoalCount.text.toString()
         map["timer"] = 0
         map["dateAndUser"] = date+FirebaseAuth.getInstance().uid.toString()
 
-        firestore.collection("Custom Goals").document(date+FirebaseAuth.getInstance().uid.toString()).set(map)
+        firestore.collection("CustomGoals").document(date+FirebaseAuth.getInstance().uid.toString()).set(map)
             .addOnCompleteListener {
                Toast.makeText(this, "Custom Goal Set.",Toast.LENGTH_SHORT).show()
                 onBackPressed()

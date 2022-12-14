@@ -57,6 +57,7 @@
         >
 
         <TextView
+            android:id="@+id/text_success"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="YOUR SUCCESS"
@@ -119,6 +120,17 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/goal_completed_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/text_success"
+            app:layout_constraintTop_toBottomOf="@id/text_success"
+            app:layout_constraintBottom_toTopOf="@id/goals_progress_bar"
+            android:text="Goal Completed : 0%"
+            android:fontFamily="@font/airbnb_cereal_medium"
+            />
+
         <ProgressBar
             android:id="@+id/goals_progress_bar"
             android:layout_marginStart="20dp"
@@ -146,6 +158,8 @@
             android:layout_marginTop="3dp"
             tools:listitem="@layout/goals_asanas_item_view"
             tools:itemCount="3"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_marginBottom="40dp"
             />
 
@@ -169,6 +183,7 @@
         />
 
     <RelativeLayout
+        android:id="@+id/set_custom_goal"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         app:layout_constraintStart_toStartOf="parent"
