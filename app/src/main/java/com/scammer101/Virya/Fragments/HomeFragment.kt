@@ -35,8 +35,8 @@ class HomeFragment : Fragment() {
             append(Calendar.getInstance().get(Calendar.YEAR))
         }
 
-        if(date>5){
-            binding.daysRecyclerView.scrollToPosition(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)-5)
+        if(date>4){
+            binding.daysRecyclerView.scrollToPosition(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)-4)
         }
 
 
