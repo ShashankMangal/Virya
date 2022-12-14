@@ -1,24 +1,35 @@
 package com.scammer101.Virya.Screens
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Camera
 import android.graphics.Color
+import android.graphics.Point
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.Size
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
+import androidx.camera.core.VideoCapture
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.LifecycleCameraController
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.common.util.concurrent.ListenableFuture
+import com.google.mlkit.common.MlKit
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.pose.PoseDetection
+import com.google.mlkit.vision.pose.PoseDetector
+import com.google.mlkit.vision.pose.PoseLandmark
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions
+import com.scammer101.Virya.Models.Draw
 import com.scammer101.Virya.R
 import com.scammer101.Virya.databinding.ActivityPoseDetectorBinding
 import java.util.concurrent.ExecutorService
@@ -27,6 +38,9 @@ import java.util.concurrent.Executors
 class PoseDetectorActivity : AppCompatActivity() {
     private lateinit var activityPoseDetectorBinding: ActivityPoseDetectorBinding
     private lateinit var cameraExecutor: ExecutorService
+    private lateinit var cameraProvider: ProcessCameraProvider
+    private lateinit var poseDetector: PoseDetector
+    private lateinit var cameraProviderFuture : ListenableFuture<ProcessCameraProvider>
 
     private lateinit var bitmapBuffer: Bitmap
 
@@ -50,41 +64,51 @@ class PoseDetectorActivity : AppCompatActivity() {
     }
 
     private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        setProcessor()
 
-        cameraProviderFuture.addListener({
-            // Used to bind the lifecycle of cameras to the lifecycle owner
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+        cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+        cameraProviderFuture.addListener(Runnable {
+            val cameraProvider = cameraProviderFuture.get()
+            bindPreview(cameraProvider)
 
-            // Preview
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(activityPoseDetectorBinding.previewView.surfaceProvider)
-                }
+        },ContextCompat.getMainExecutor(this))
 
-            // Select back camera as a default
-            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-
-            try {
-                // Unbind use cases before rebinding
-                cameraProvider.unbindAll()
-
-                // Bind use cases to camera
-                cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview)
-
-            } catch(exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
-            }
-
-        }, ContextCompat.getMainExecutor(this))
+//        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+//
+//        cameraProviderFuture.addListener({
+//            // Used to bind the lifecycle of cameras to the lifecycle owner
+//            cameraProvider = cameraProviderFuture.get()
+//
+//            // Preview
+//            val preview = Preview.Builder()
+//                .build()
+//                .also {
+//                    it.setSurfaceProvider(activityPoseDetectorBinding.previewView.surfaceProvider)
+//                }
+//
+//            // Select back camera as a default
+//            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
+//
+//            try {
+//                // Unbind use cases before rebinding
+//                cameraProvider.unbindAll()
+//
+//                // Bind use cases to camera
+//                cameraProvider.bindToLifecycle(
+//                    this, cameraSelector, preview)
+//
+//            } catch(exc: Exception) {
+//                Log.e(TAG, "Use case binding failed", exc)
+//            }
+//
+//        }, ContextCompat.getMainExecutor(this))
     }
 
-    fun setProcessor(bitmap: Bitmap){
+    fun setProcessor(){
         val poseDetectorOptions = AccuratePoseDetectorOptions.Builder()
             .setDetectorMode(AccuratePoseDetectorOptions.STREAM_MODE)
             .build()
+        poseDetector = PoseDetection.getClient(poseDetectorOptions)
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
@@ -140,6 +164,69 @@ class PoseDetectorActivity : AppCompatActivity() {
         val darkness =
             1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
         return darkness >= 0.5
+    }
+    @SuppressLint("RestrictedApi", "UnsafeExperimentalUsageError", "NewApi",
+        "UnsafeOptInUsageError"
+    )
+    private fun bindPreview(cameraProvider: ProcessCameraProvider){
+
+        Log.d("Check:","inside bind preview")
+
+        val preview = Preview.Builder().build()
+
+        preview.setSurfaceProvider(activityPoseDetectorBinding.previewView.surfaceProvider)
+
+        val cameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
+            .build()
+        val point = Point()
+        val size = display?.getRealSize(point)
+
+
+
+        val imageAnalysis = ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+
+        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), ImageAnalysis.Analyzer { imageProxy ->
+
+            val rotationDegrees = imageProxy.imageInfo.rotationDegrees
+            val image = imageProxy.image
+
+            if(image!=null){
+
+                val processImage = InputImage.fromMediaImage(image,rotationDegrees)
+
+                poseDetector.process(processImage)
+                    .addOnSuccessListener {
+                        if(activityPoseDetectorBinding.parentLayout.childCount>3){
+                            activityPoseDetectorBinding.parentLayout.removeViewAt(3)
+                        }
+                        if(it.allPoseLandmarks.isNotEmpty()){
+
+                            Log.d("this is pose",it.getPoseLandmark(PoseLandmark.LEFT_SHOULDER)!!.position.x .toString())
+
+                            if(activityPoseDetectorBinding.parentLayout.childCount>3){
+                                activityPoseDetectorBinding.parentLayout.removeViewAt(3)
+                            }
+
+                            val element = Draw(applicationContext,it)
+                            activityPoseDetectorBinding.parentLayout.addView(element)
+                        }
+                        imageProxy.close()
+                    }
+                    .addOnFailureListener{
+
+
+                        imageProxy.close()
+                    }
+            }
+
+
+        })
+
+        cameraProvider.bindToLifecycle(this,cameraSelector,imageAnalysis,preview)
+
     }
 
 }
