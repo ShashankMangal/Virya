@@ -3,6 +3,7 @@ package com.scammer101.Virya.Fragments
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ class GoalsFragment : Fragment() {
     private var preferenceManager: PreferenceManager? = null
     private lateinit var firestore: FirebaseFirestore
     private var dailyModel: DailyYogaModel? = null
+    private var customModel: CustomGoalModel? = null
     private lateinit var yogaArrayList: ArrayList<CustomGoalModel>
     private lateinit var adapter: GoalsAdapter
 
@@ -62,13 +64,72 @@ class GoalsFragment : Fragment() {
             startActivity(intent)
         }
 
+        firestore.collection("CustomGoals").document(preferenceManager!!.getString(ConstantsValues.KEY_DATE)).get()
+            .addOnSuccessListener { doc ->
+                try {
+                    customModel = doc.toObject(CustomGoalModel::class.java)
+                    preferenceManager!!.putString(ConstantsValues.KEY_LATEST_CUSTOM_GOAL, customModel!!.name.toString().lowercase())
+                    preferenceManager!!.putString(ConstantsValues.KEY_REPEAT, customModel!!.repeat.toString().lowercase())
+                } catch (e: Exception) {
+                    Log.v("limit error", e.message.toString())
+                }
+
+            }
+
+        firestore.collection("DailyYoga").document(preferenceManager!!.getString(ConstantsValues.KEY_DATE)).get()
+            .addOnSuccessListener { doc ->
+                try {
+                    dailyModel = doc.toObject(DailyYogaModel::class.java)
+
+                    val name = preferenceManager!!.getString(ConstantsValues.KEY_LATEST_CUSTOM_GOAL)
+                    val repeat = preferenceManager!!.getString(ConstantsValues.KEY_REPEAT)
+
+                    if(name.contains("tree"))
+                    {
+                        preferenceManager!!.putString(ConstantsValues.KEY_FIREBASE_REPEAT, dailyModel!!.treePoseCountPose.toString())
+                        preferenceManager!!.putString(ConstantsValues.KEY_FIREBASE_TIMER, dailyModel!!.treePoseCountTimer.toString())
+                    }
+                    else if(name.contains("tpose"))
+                    {
+                        preferenceManager!!.putString(ConstantsValues.KEY_FIREBASE_REPEAT, dailyModel!!.gettPoseCountPose().toString())
+                        preferenceManager!!.putString(ConstantsValues.KEY_FIREBASE_TIMER, dailyModel!!.gettPoseCountTimer().toString())
+                    }
+                    else if(name.contains("warrior"))
+                    {
+                        preferenceManager!!.putString(ConstantsValues.KEY_FIREBASE_REPEAT, dailyModel!!.warriorPoseCountPose.toString())
+                        preferenceManager!!.putString(ConstantsValues.KEY_FIREBASE_TIMER, dailyModel!!.warriorPoseCountTimer.toString())
+                    }
+
+
+
+                } catch (e: Exception) {
+                    Log.v("limit error", e.message.toString())
+                }
+
+            }
+
+
+        try {
+            val customSetCount = preferenceManager!!.getString(ConstantsValues.KEY_REPEAT).toInt()
+            val customFirebaseTimer = preferenceManager!!.getString(ConstantsValues.KEY_FIREBASE_TIMER).toInt()
+            val customFirebaseCount = preferenceManager!!.getString(ConstantsValues.KEY_FIREBASE_REPEAT).toInt()
+            binding.goalTotalTimer.text = customFirebaseTimer.toString() + " min"
+            currentProgress = customFirebaseCount/customSetCount*100
+            if(currentProgress>100)
+            {
+                currentProgress = 100
+            }
+            binding.goalCompletedText.text = "Goal Completed : " + currentProgress.toString() + "%"
+            ObjectAnimator.ofInt(binding.goalsProgressBar, "progress", currentProgress)
+                .setDuration(2000).start()
+        } catch (e: Exception) {
+        }
+
         return binding.root
     }
 
     private fun init() {
-        currentProgress = 80
-        ObjectAnimator.ofInt(binding.goalsProgressBar, "progress", currentProgress)
-            .setDuration(2000).start()
+
         preferenceManager = PreferenceManager(context)
         firestore = FirebaseFirestore.getInstance()
         yogaArrayList = ArrayList()

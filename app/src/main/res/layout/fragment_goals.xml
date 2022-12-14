@@ -96,9 +96,9 @@
                 >
 
                 <TextView
+                    android:id="@+id/goal_total_timer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="590 min"
                     android:textColor="@color/black"
                     android:fontFamily="@font/airbnb_cereal_medium"
                     android:textStyle="bold"
@@ -127,7 +127,6 @@
             app:layout_constraintStart_toStartOf="@id/text_success"
             app:layout_constraintTop_toBottomOf="@id/text_success"
             app:layout_constraintBottom_toTopOf="@id/goals_progress_bar"
-            android:text="Goal Completed : 0%"
             android:fontFamily="@font/airbnb_cereal_medium"
             />
 
