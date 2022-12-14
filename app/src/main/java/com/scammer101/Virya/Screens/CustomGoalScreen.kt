@@ -59,6 +59,8 @@ class CustomGoalScreen : AppCompatActivity() {
         map["date"] = date
         map["name"] = name
         map["repeat"] = repeat
+        map["timer"] = 0
+        map["dateAndUser"] = date+FirebaseAuth.getInstance().uid.toString()
 
         firestore.collection("Custom Goals").document(date+FirebaseAuth.getInstance().uid.toString()).set(map)
             .addOnCompleteListener {

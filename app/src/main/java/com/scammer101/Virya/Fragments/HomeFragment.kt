@@ -124,7 +124,8 @@ class HomeFragment : Fragment() {
                                 "timeSpent" to 0,
                                 "warriorCountPose" to 0,
                                 "warriorCountTimer" to 0,
-                                "date" to date
+                                "date" to date,
+                                "userAndDate" to date+FirebaseAuth.getInstance().uid.toString()
                             )
                         )
                         setDailyData(0, 0, 0)
