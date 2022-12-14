@@ -241,6 +241,36 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_marginStart="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Weight (in Kgs)"
+                android:textColor="@color/previewColorLight"
+                android:fontFamily="@font/airbnb_cereal_medium"
+                />
+            <EditText
+                android:id="@+id/details_current_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="6"
+                android:textCursorDrawable="@drawable/custom_cursor"
+                android:backgroundTint="@color/black"
+                android:inputType="numberDecimal"
+                android:hint="00.00"
+                android:textColorHint="@color/previewColorLight"
+                android:fontFamily="@font/airbnb_cereal_medium"
+                android:textColor="@color/black"
+                />
+
+        </LinearLayout>
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/details_save_button"
             android:layout_width="300dp"

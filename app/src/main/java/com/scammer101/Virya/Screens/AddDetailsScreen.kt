@@ -1,14 +1,21 @@
 package com.scammer101.Virya.Screens
 
 import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.MediaStore
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,12 +23,16 @@ import com.scammer101.Virya.Models.DailyYogaModel
 import com.scammer101.Virya.Models.UserModel
 import com.scammer101.Virya.R
 import com.scammer101.Virya.databinding.ActivityAddDetailsScreenBinding
+import java.io.ByteArrayOutputStream
+import java.io.FileNotFoundException
+import java.io.InputStream
 
 class AddDetailsScreen : AppCompatActivity() {
 
     private lateinit var binding : ActivityAddDetailsScreenBinding
     private lateinit var firestore : FirebaseFirestore
     private var userModel: UserModel? = null
+    private var profileImage: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +55,16 @@ class AddDetailsScreen : AppCompatActivity() {
     {
         binding.profileDetailsBackButton.setOnClickListener{onBackPressed()}
         binding.detailsSaveButton.setOnClickListener { saveUserData() }
+        try {
+            binding.detailProfileImage.setOnClickListener {
+                val intent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                pickImage.launch(intent)
+            }
+        } catch (e: Exception) {
+            Toast.makeText(applicationContext, "Error : " + e.message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun getUserData() {
@@ -55,13 +76,19 @@ class AddDetailsScreen : AppCompatActivity() {
                     binding.detailsDob.setText(userModel!!.dob.toString())
                     binding.detailsGoalWeight.setText(userModel!!.goalWeight.toString())
                     binding.detailsStartWeight.setText(userModel!!.startWeight.toString())
+                    binding.detailsCurrentWeight.setText(userModel!!.currentWeight.toString())
                     binding.detailsHeight.setText(userModel!!.height.toString())
                     binding.detailsGender.setText(userModel!!.gender.toString())
 
-                    if(!userModel!!.profileImage.equals(""))
-                    {
-                        Glide.with(applicationContext).load(userModel!!.profileImage).thumbnail(
-                            Glide.with(applicationContext).load(R.drawable.spinner)).into(binding.detailProfileImage)
+                    if (userModel!!.profileImage != "") {
+                        val decodedString: ByteArray = Base64.decode(userModel!!.profileImage, Base64.DEFAULT)
+                        val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+
+                        Glide.with(this)
+                            .load(decodedByte).thumbnail(Glide.with(this).load(R.drawable.spinner))
+                            .into(binding.detailProfileImage)
+                    } else {
+                        binding.detailProfileImage.setImageResource(R.drawable.demo_user)
                     }
 
                 } catch (e: Exception) {
@@ -82,6 +109,14 @@ class AddDetailsScreen : AppCompatActivity() {
         val height = binding.detailsHeight.text.toString()
         val gender = binding.detailsGender.text.toString()
         val goalW = binding.detailsGoalWeight.text.toString()
+        val currentW = binding.detailsCurrentWeight.text.toString()
+
+        if (profileImage != "") {
+            firestore.collection("Users").document(FirebaseAuth.getInstance().uid.toString())
+                .update("profileImage", profileImage)
+        } else {
+            binding.detailProfileImage.setImageResource(R.drawable.demo_user)
+        }
 
         firestore.collection("Users")
             .document(FirebaseAuth.getInstance().uid!!)
@@ -89,6 +124,7 @@ class AddDetailsScreen : AppCompatActivity() {
                 "name" to name,
                 "dob" to dob,
                 "goalWeight" to goalW,
+                "currentWeight" to currentW,
                 "startWeight" to startW,
                 "height" to height,
                 "gender" to gender,
@@ -115,6 +151,35 @@ class AddDetailsScreen : AppCompatActivity() {
         val darkness =
             1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
         return darkness >= 0.5
+    }
+
+    private val pickImage = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            if (result.data != null) {
+                val imageUri = result.data!!.data
+                try {
+                    val inputStream: InputStream? =
+                        applicationContext?.getContentResolver()?.openInputStream(imageUri!!)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    binding.detailProfileImage.setImageBitmap(bitmap)
+                    profileImage = profileImage(bitmap)!!
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+    private fun profileImage(bitmap: Bitmap): String? {
+        val previewWidth = 160
+        val previewHeight = bitmap.height * previewWidth / bitmap.width
+        val previewbitmap = Bitmap.createScaledBitmap(bitmap, previewWidth, previewHeight, false)
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        previewbitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val bytes = byteArrayOutputStream.toByteArray()
+        return Base64.encodeToString(bytes, Base64.DEFAULT)
     }
 
 }

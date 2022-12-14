@@ -33,6 +33,7 @@
         android:layout_marginTop="70dp"
         />
     <TextView
+        android:id="@+id/profile_user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Demo User"
@@ -52,7 +53,7 @@
         android:layout_height="60dp"
         app:layout_constraintEnd_toEndOf="@id/profile_logout"
         app:layout_constraintTop_toBottomOf="@id/profile_logout"
-        android:src="@drawable/demo_user_pic"
+        android:src="@drawable/demo_user"
         android:layout_marginTop="10dp"
         />
     
@@ -178,9 +179,10 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/profile_training_completed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5"
+                android:text="0"
                 android:textColor="@color/previewColorLight"
                 android:textStyle="bold"
                 android:textSize="21sp"
@@ -223,9 +225,10 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/profile_total_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="100"
+                android:text="0"
                 android:textColor="@color/previewColorLight"
                 android:textStyle="bold"
                 android:textSize="21sp"
@@ -268,9 +271,10 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/profile_total_asanas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="50"
+                android:text="0"
                 android:textColor="@color/previewColorLight"
                 android:textStyle="bold"
                 android:textSize="21sp"
@@ -307,10 +311,11 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/profile_start_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/airbnb_cereal_medium"
-                android:text="56.5 Kg"
+                android:text="00.00 Kg"
                 android:textColor="@color/previewColor"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -332,10 +337,11 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/profile_current_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="00.00 Kg"
                 android:fontFamily="@font/airbnb_cereal_medium"
-                android:text="53.5 Kg"
                 android:textColor="@color/previewColor"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -357,10 +363,11 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/profile_goal_weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/airbnb_cereal_medium"
-                android:text="52.0 Kg"
+                android:text="00.00 Kg"
                 android:textColor="@color/themeDarkBlue"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -382,35 +389,5 @@
         app:layout_constraintTop_toBottomOf="@id/profile_stats"
         android:background="@drawable/add_round_background"
         />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/change_current_weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
-        app:layout_constraintStart_toStartOf="@id/weight_layout"
-        app:layout_constraintEnd_toEndOf="@id/weight_layout"
-        app:layout_constraintBottom_toTopOf="@id/weight_layout"
-        android:layout_margin="16dp"
-        app:boxStrokeColor="@color/themeDarkBlue"
-        app:hintTextColor="@color/themeDarkBlue"
-        android:textColorHint="@color/themeDarkBlue"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/current_weight_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Current Weight"
-            android:inputType="numberDecimal"
-            android:maxLength="6"
-            android:singleLine="true"
-            android:textColorHint="@color/themeDarkBlue"
-            android:textColor="@color/black"
-            android:fontFamily="@font/airbnb_cereal_medium"
-            android:textCursorDrawable="@drawable/custom_cursor"
-            />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
