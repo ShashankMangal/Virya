@@ -55,46 +55,59 @@ class PoseDetectorActivity : AppCompatActivity() {
         cameraFacing = CameraSelector.LENS_FACING_FRONT
         val yogaPose :String = intent.getStringExtra("yoga").toString()
         setStatusBarColor(Color.parseColor("#000000"))
-        Toast.makeText(applicationContext, yogaPose,Toast.LENGTH_SHORT).show()
         if (allPermissionsGranted()) {
-            startCamera()
+
+            //start camera
+            cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+            cameraProviderFuture.addListener(Runnable {
+                val cameraProvider = cameraProviderFuture.get()
+                bindPreview(cameraProvider)
+
+            },ContextCompat.getMainExecutor(this))
+            cameraExecutor = Executors.newSingleThreadExecutor()
+
+            //start pose detector
+            val poseDetectorOptions = AccuratePoseDetectorOptions.Builder()
+                .setDetectorMode(AccuratePoseDetectorOptions.STREAM_MODE)
+                .build()
+            poseDetector = PoseDetection.getClient(poseDetectorOptions)
+
+
+            activityPoseDetectorBinding.switchCamera.setOnClickListener(View.OnClickListener {
+                if(cameraFacing == CameraSelector.LENS_FACING_FRONT){
+                    cameraFacing = CameraSelector.LENS_FACING_BACK
+                }else{
+                    cameraFacing = CameraSelector.LENS_FACING_FRONT
+                }
+                cameraExecutor.shutdown()
+                cameraProvider.unbindAll()
+
+                //start camera
+                cameraProviderFuture = ProcessCameraProvider.getInstance(this)
+                cameraProviderFuture.addListener(Runnable {
+                    val cameraProvider = cameraProviderFuture.get()
+                    bindPreview(cameraProvider)
+
+                },ContextCompat.getMainExecutor(this))
+                cameraExecutor = Executors.newSingleThreadExecutor()
+
+            })
         } else {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )
         }
-        activityPoseDetectorBinding.switchCamera.setOnClickListener(View.OnClickListener {
-            if(cameraFacing == CameraSelector.LENS_FACING_FRONT){
-                cameraFacing = CameraSelector.LENS_FACING_BACK
-            }else{
-                cameraFacing = CameraSelector.LENS_FACING_FRONT
-            }
-            if(cameraProvider!=null && cameraExecutor!=null) {
-                cameraExecutor.shutdown()
-                cameraProvider.unbindAll()
-            }else(startCamera())
-
-        })
-        cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
     private fun startCamera() {
         setProcessor()
 
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-        cameraProviderFuture.addListener(Runnable {
-            val cameraProvider = cameraProviderFuture.get()
-            bindPreview(cameraProvider)
 
-        },ContextCompat.getMainExecutor(this))
 
     }
 
     fun setProcessor(){
-        val poseDetectorOptions = AccuratePoseDetectorOptions.Builder()
-            .setDetectorMode(AccuratePoseDetectorOptions.STREAM_MODE)
-            .build()
-        poseDetector = PoseDetection.getClient(poseDetectorOptions)
+
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {

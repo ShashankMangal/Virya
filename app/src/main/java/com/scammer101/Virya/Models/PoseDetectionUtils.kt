@@ -2,6 +2,7 @@ package com.scammer101.Virya.Models
 
 import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseLandmark
+import kotlin.math.abs
 import kotlin.math.atan2
 
 class PoseDetectionUtils {
@@ -97,7 +98,7 @@ class PoseDetectionUtils {
                 }
             }
 
-            return angle_list.sum().toDouble() * 100 / actual2.sum()
+            return angle_list.sum() * 100 / actual2.sum()
         }
 
         return 0.0
@@ -116,7 +117,7 @@ class PoseDetectionUtils {
             (a.position.x - b.position.x).toDouble()
         )
         )
-        return if (angle > 180.0) 360 - angle else angle
+        return abs(if (angle > 180.0) 360 - angle else angle)
     }
 
 
