@@ -83,9 +83,11 @@ class HomeFragment : Fragment() {
     private fun checkSubscription()
     {
         val startTime = preferenceManager!!.getInt("starttime")
-        val currentTime = (System.currentTimeMillis() / 1000).toInt()
+        val currentTime = (System.currentTimeMillis().toInt() / 1000)
         val timeofVip = currentTime - startTime //calculate the time of his VIP-being time
-
+        Log.v("Subscribe", "startTime : " + startTime.toString())
+        Log.v("Subscribe", "currentTime : " + currentTime.toString())
+        Log.v("Subscribe", "timeOfVip : " + timeofVip.toString())
         if (timeofVip >= 2592000) //2592000 is 30 days in seconds
         {
 //30 days over, update user to non-vip
