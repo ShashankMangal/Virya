@@ -1,5 +1,6 @@
 package com.scammer101.Virya.Fragments
 
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -22,8 +24,7 @@ import com.scammer101.Virya.databinding.FragmentHomeBinding
 import java.util.*
 
 
-class HomeFragment : Fragment() {
-
+class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var list : ArrayList<YogaPose>
     private var preferenceManager: PreferenceManager? = null
@@ -47,7 +48,7 @@ class HomeFragment : Fragment() {
             append(getDay())
         }
         binding.daysRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
-        binding.daysRecyclerView.adapter = HomeDaysRecyclerAdapter(date)
+        binding.daysRecyclerView.adapter = HomeDaysRecyclerAdapter(date,this)
         binding.posesRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context, androidx.recyclerview.widget.LinearLayoutManager.HORIZONTAL, false)
         binding.posesRecyclerView.setHasFixedSize(true)
         list = ArrayList()
@@ -162,6 +163,11 @@ class HomeFragment : Fragment() {
         binding.finishedYogaTV.text = f.toString()
         binding.inProgressYogaTV.text = i.toString()
         binding.timeSpentYogaTV.text = t.toString()
+    }
+
+
+    override fun onDayClickListener(date: String) {
+        Toast.makeText(context, date, Toast.LENGTH_SHORT).show()
     }
 
 }
