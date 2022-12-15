@@ -30,8 +30,8 @@ class MainScreen : AppCompatActivity() {
         setStatusBarColor(Color.parseColor("#EAFDDD"))
         binding.bottomNavigation.setItemSelected(R.id.home)
         firstReplacementFragment(HomeFragment())
-        binding.bottomNavigation.showBadge(R.id.home)
-        binding.bottomNavigation.showBadge(R.id.goals, 10)
+        binding.bottomNavigation.showBadge(R.id.profile)
+        //binding.bottomNavigation.showBadge(R.id.goals, 10)
     }
 
     private fun setListeners()
