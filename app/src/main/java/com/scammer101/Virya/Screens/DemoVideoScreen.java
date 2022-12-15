@@ -54,6 +54,7 @@ public class DemoVideoScreen extends AppCompatActivity {
         MediaItem mediaItem = MediaItem.fromUri(url);
         exoPlayer.addMediaItem(mediaItem);
         exoPlayer.prepare();
+        exoPlayer.play();
 
         binding.demoNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,4 +67,15 @@ public class DemoVideoScreen extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        exoPlayer.stop();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        exoPlayer.stop();
+    }
 }
