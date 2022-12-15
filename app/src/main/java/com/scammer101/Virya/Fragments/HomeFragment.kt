@@ -117,7 +117,7 @@ class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
                     n + FirebaseAuth.getInstance().uid!!.toString()
                 )
                 preferenceManager!!.putString(ConstantsValues.KEY_DATE_ONLY, n)
-                checkLimit(n + FirebaseAuth.getInstance().uid!!.toString(), date.toString())
+                checkLimit(n + FirebaseAuth.getInstance().uid!!.toString(), n)
             }
         })
 
@@ -171,6 +171,7 @@ class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
     override fun onDayClickListener(date: String) {
         Log.v("Homedate", date)
         Toast.makeText(context, date, Toast.LENGTH_SHORT).show()
+        checkLimit(date+FirebaseAuth.getInstance().uid.toString(), date)
     }
 
 }
