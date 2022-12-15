@@ -186,15 +186,15 @@ class PoseDetectorActivity : AppCompatActivity() {
 
                 poseDetector.process(processImage)
                     .addOnSuccessListener {
-                        if(activityPoseDetectorBinding.parentLayout.childCount>3){
-                            activityPoseDetectorBinding.parentLayout.removeViewAt(3)
+                        if(activityPoseDetectorBinding.parentLayout.childCount>1){
+                            activityPoseDetectorBinding.parentLayout.removeViewAt(1)
                         }
                         if(it.allPoseLandmarks.isNotEmpty()){
 
 //                            Log.d("this is pose",it.getPoseLandmark(PoseLandmark.LEFT_SHOULDER)!!.position.x .toString())
 
-                            if(activityPoseDetectorBinding.parentLayout.childCount>3){
-                                activityPoseDetectorBinding.parentLayout.removeViewAt(3)
+                            if(activityPoseDetectorBinding.parentLayout.childCount>1){
+                                activityPoseDetectorBinding.parentLayout.removeViewAt(1)
                             }
 
                             val element = Draw(applicationContext,it)
