@@ -1,11 +1,13 @@
 package com.scammer101.Virya.Fragments
 
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.scammer101.Virya.Models.DailyYogaModel
@@ -18,7 +20,7 @@ import com.scammer101.Virya.adapters.HomeDaysRecyclerAdapter
 import com.scammer101.Virya.adapters.HomePosesRecyclerAdapter
 import com.scammer101.Virya.databinding.FragmentHomeBinding
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class HomeFragment : Fragment() {
 
@@ -68,6 +70,7 @@ class HomeFragment : Fragment() {
         preferenceManager = PreferenceManager(requireContext())
         firestore = FirebaseFirestore.getInstance()
         getDateOnline()
+        checkSubscription()
 
         return binding.root
     }
@@ -75,6 +78,19 @@ class HomeFragment : Fragment() {
     private fun getDay(): String{
         val c = Calendar.getInstance()
         return (c.get(Calendar.DAY_OF_WEEK)).toString()
+    }
+
+    private fun checkSubscription()
+    {
+        val startTime = preferenceManager!!.getInt("starttime")
+        val currentTime = (System.currentTimeMillis() / 1000).toInt()
+        val timeofVip = currentTime - startTime //calculate the time of his VIP-being time
+
+        if (timeofVip >= 2592000) //2592000 is 30 days in seconds
+        {
+//30 days over, update user to non-vip
+            firestore.collection("Users").document(FirebaseAuth.getInstance().uid.toString()).update("subscribe", false)
+        }
     }
 
     fun getGreetingMessage():String{

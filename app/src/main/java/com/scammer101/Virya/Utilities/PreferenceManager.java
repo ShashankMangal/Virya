@@ -25,10 +25,20 @@ public class PreferenceManager
 
     public void putString(String key, String value)
     {
-        SharedPreferences.Editor editor = sharedPreferences.edit();;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(key, value);
         editor.apply();
     }
+
+    public void putInt(String key, int value)
+    {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(key, value);
+        editor.apply();
+
+    }
+
+    public int getInt(String key){ return sharedPreferences.getInt(key, 0); }
 
     public String getString(String key)
     {
