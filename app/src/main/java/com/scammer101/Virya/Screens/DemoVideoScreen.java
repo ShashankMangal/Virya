@@ -33,7 +33,19 @@ public class DemoVideoScreen extends AppCompatActivity {
     private void init()
     {
         exoPlayer = new ExoPlayer.Builder(this).build();
-        url = "https://firebasestorage.googleapis.com/v0/b/virya-50134.appspot.com/o/Yoga%2Ftreepose.mp4?alt=media&token=a9059645-257c-4b79-b332-23ff7510038a";
+        if(yogaPose.equals("treepose"))
+        {
+            url = "https://firebasestorage.googleapis.com/v0/b/virya-50134.appspot.com/o/Yoga%2Ftreepose.mp4?alt=media&token=a9059645-257c-4b79-b332-23ff7510038a";
+        }
+        else if(yogaPose.equals("warrior2pose"))
+        {
+            url = "https://firebasestorage.googleapis.com/v0/b/virya-50134.appspot.com/o/Yoga%2Fwarrior.mp4?alt=media&token=390a021f-4db4-4e93-8325-48eb0a6dab5e";
+        }
+        else
+        {
+            url = "https://firebasestorage.googleapis.com/v0/b/virya-50134.appspot.com/o/Yoga%2Ftreepose.mp4?alt=media&token=a9059645-257c-4b79-b332-23ff7510038a";
+        }
+
     }
 
     private void setListener()
