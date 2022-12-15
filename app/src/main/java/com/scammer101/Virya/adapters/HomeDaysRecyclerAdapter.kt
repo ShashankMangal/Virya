@@ -1,5 +1,6 @@
 package com.scammer101.Virya.adapters
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,8 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.scammer101.Virya.R
 import java.text.DateFormat
-import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class HomeDaysRecyclerAdapter(date: Int,listener:OnClick) :RecyclerView.Adapter<HomeDaysRecyclerAdapter.HomeDaysViewHolder>() {
@@ -41,31 +42,15 @@ class HomeDaysRecyclerAdapter(date: Int,listener:OnClick) :RecyclerView.Adapter<
             holder.day.setTextColor(holder.itemView.context.getColor(R.color.black))
         }
         var date = DateFormat.getDateInstance(DateFormat.DEFAULT).format(cal.time)
+        val dateFormated = SimpleDateFormat("MM-dd-yyyy").format(cal.time)
         holder.background.setOnClickListener {
-            parseDateToddMMyyyy(date)?.let { it1 -> listener.onDayClickListener(it1) }
+            listener.onDayClickListener(dateFormated)
         }
     }
 
     override fun getItemCount(): Int {
         return Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)
     }
-
-    fun parseDateToddMMyyyy(time: String?): String? {
-        val inputPattern = "dd-MMM-yyyy"
-        val outputPattern = "MM-dd-yyyy"
-        val inputFormat = SimpleDateFormat(inputPattern)
-        val outputFormat = SimpleDateFormat(outputPattern)
-        var date: Date? = null
-        var str: String? = null
-        try {
-            date = inputFormat.parse(time)
-            str = outputFormat.format(date)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return str
-    }
-
 
     interface OnClick {
         fun onDayClickListener(date: String)

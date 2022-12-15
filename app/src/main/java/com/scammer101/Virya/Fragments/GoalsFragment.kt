@@ -4,19 +4,18 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.scammer101.Virya.Models.CustomGoalModel
 import com.scammer101.Virya.Models.DailyYogaModel
 import com.scammer101.Virya.Screens.CustomGoalScreen
-import com.scammer101.Virya.Screens.PoseDetectorActivity
 import com.scammer101.Virya.Utilities.ConstantsValues
 import com.scammer101.Virya.Utilities.PreferenceManager
 import com.scammer101.Virya.adapters.GoalsAdapter
@@ -75,6 +74,41 @@ class GoalsFragment : Fragment() {
                 }
 
             }
+
+        binding.goalsShareSuccess.setOnClickListener {
+
+            if(preferenceManager!!.getString(ConstantsValues.KEY_LATEST_CUSTOM_GOAL.toString())=="" || preferenceManager!!.getString(ConstantsValues.KEY_LATEST_CUSTOM_GOAL.toString())==null)
+            {
+                val shareBody =          """
+            Hey, I'm using Virya as my Virtual Fitness Instructor and the results are great.
+            Download from Play Store
+            https://play.google.com/store/apps/details?id=${requireActivity().packageName}
+            """.trimIndent()
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_TEXT, shareBody)
+                startActivity(intent)
+            }
+            else
+            {
+                val pose = preferenceManager!!.getString(ConstantsValues.KEY_LATEST_CUSTOM_GOAL).toString()
+                val count = preferenceManager!!.getString(ConstantsValues.KEY_REPEAT).toString()
+
+                val shareBody =          """
+            Hey, I'm using Virya as my Virtual Fitness Instructor and the results are great.
+            Download from Play Store
+            https://play.google.com/store/apps/details?id=${requireActivity().packageName}
+            """.trimIndent() + "\nMy Goal for today is to perform " + pose + " pose " + count + " times."
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_TEXT, shareBody)
+                startActivity(intent)
+            }
+
+
+
+
+        }
 
         firestore.collection("DailyYoga").document(preferenceManager!!.getString(ConstantsValues.KEY_DATE)).get()
             .addOnSuccessListener { doc ->

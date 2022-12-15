@@ -84,9 +84,11 @@ class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
     private fun checkSubscription()
     {
         val startTime = preferenceManager!!.getInt("starttime")
-        val currentTime = (System.currentTimeMillis() / 1000).toInt()
+        val currentTime = (System.currentTimeMillis().toInt() / 1000)
         val timeofVip = currentTime - startTime //calculate the time of his VIP-being time
-
+        Log.v("Subscribe", "startTime : " + startTime.toString())
+        Log.v("Subscribe", "currentTime : " + currentTime.toString())
+        Log.v("Subscribe", "timeOfVip : " + timeofVip.toString())
         if (timeofVip >= 2592000) //2592000 is 30 days in seconds
         {
 //30 days over, update user to non-vip
@@ -115,7 +117,7 @@ class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
                     n + FirebaseAuth.getInstance().uid!!.toString()
                 )
                 preferenceManager!!.putString(ConstantsValues.KEY_DATE_ONLY, n)
-                checkLimit(n + FirebaseAuth.getInstance().uid!!.toString(), date.toString())
+                checkLimit(n + FirebaseAuth.getInstance().uid!!.toString(), n)
             }
         })
 
@@ -167,7 +169,9 @@ class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
 
 
     override fun onDayClickListener(date: String) {
+        Log.v("Homedate", date)
         Toast.makeText(context, date, Toast.LENGTH_SHORT).show()
+        checkLimit(date+FirebaseAuth.getInstance().uid.toString(), date)
     }
 
 }

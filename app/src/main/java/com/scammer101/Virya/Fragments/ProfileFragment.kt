@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,6 +95,7 @@ class ProfileFragment : Fragment() {
         binding.profileSubscription.setOnClickListener {
             firestore.collection("Users").document(FirebaseAuth.getInstance().uid.toString()).update( "subscribe" , true)
            preferenceManager!!.putInt("starttime", System.currentTimeMillis().toInt() / 1000)
+            Log.v("Subscribe", (System.currentTimeMillis().toInt() / 1000).toString())
             Toast.makeText(context, "Activating Subscription.",Toast.LENGTH_SHORT).show()
         }
 
