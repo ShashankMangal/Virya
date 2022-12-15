@@ -31,6 +31,7 @@ import com.google.mlkit.vision.pose.PoseDetector
 import com.google.mlkit.vision.pose.PoseLandmark
 import com.google.mlkit.vision.pose.accurate.AccuratePoseDetectorOptions
 import com.scammer101.Virya.Models.Draw
+import com.scammer101.Virya.Models.PoseDetectionUtils
 import com.scammer101.Virya.R
 import com.scammer101.Virya.databinding.ActivityPoseDetectorBinding
 import java.util.concurrent.ExecutorService
@@ -186,18 +187,21 @@ class PoseDetectorActivity : AppCompatActivity() {
 
                 poseDetector.process(processImage)
                     .addOnSuccessListener {
-                        if(activityPoseDetectorBinding.parentLayout.childCount>1){
-                            activityPoseDetectorBinding.parentLayout.removeViewAt(1)
+                        if(activityPoseDetectorBinding.parentLayout.childCount>3){
+                            activityPoseDetectorBinding.parentLayout.removeViewAt(3)
                         }
                         if(it.allPoseLandmarks.isNotEmpty()){
-
-//                            Log.d("this is pose",it.getPoseLandmark(PoseLandmark.LEFT_SHOULDER)!!.position.x .toString())
-
-                            if(activityPoseDetectorBinding.parentLayout.childCount>1){
-                                activityPoseDetectorBinding.parentLayout.removeViewAt(1)
+                            if(activityPoseDetectorBinding.parentLayout.childCount>3){
+                                activityPoseDetectorBinding.parentLayout.removeViewAt(3)
                             }
-
                             val element = Draw(applicationContext,it)
+                            var poseDetectionUtils = PoseDetectionUtils()
+                            var angleList = poseDetectionUtils.pose_angles(it)
+                            var accuracy = poseDetectionUtils.accuracy_Treepose(angleList)
+                            Log.d("Tree Pose Accuracy:","$accuracy")
+                            runOnUiThread(Runnable {
+                                activityPoseDetectorBinding.accuracy.text = "$accuracy"
+                            })
                             activityPoseDetectorBinding.parentLayout.addView(element)
                         }
                         imageProxy.close()

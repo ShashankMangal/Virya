@@ -17,7 +17,7 @@ class PoseDetectionUtils {
         }
     }
 
-    fun accuracy_Treepose(angle_list: ArrayList<Int>, direction: String = "left"): Double {
+    fun accuracy_Treepose(angle_list: ArrayList<Double>, direction: String = "left"): Double {
         // lea, rea, lsa, rsa, lka, rka, lha, rha
         var actual1 = arrayListOf(160, 160, 100, 100, 180, 30, 180, 120)
         var actual2 = arrayListOf(160, 160, 100, 100, 30, 180, 120, 180)
@@ -32,7 +32,7 @@ class PoseDetectionUtils {
                 }
             }
 
-            return angle_list.sum().toDouble() * 100 / actual1.sum()
+            return angle_list.sum() * 100 / actual1.sum()
         }
 
         // for left
@@ -51,12 +51,6 @@ class PoseDetectionUtils {
         return 0.0
     }
 
-
-
-
-
-
-
     fun accuracy_Tpose(angle_list: ArrayList<Int>): Double {
         // lea, rea, lsa, rsa, lka, rka, lha, rha
         var actual1 = arrayListOf(180, 180, 90, 90, 180, 180, 180, 180)
@@ -72,10 +66,6 @@ class PoseDetectionUtils {
 
         return angle_list.sum().toDouble() * 100 / actual1.sum()
     }
-
-
-
-
 
 
 
@@ -177,6 +167,5 @@ class PoseDetectionUtils {
         return arrayListOf(lea, rea, lsa, rsa, lka, rka, lha, rha)
 
     }
-
 
 }
