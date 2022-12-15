@@ -12,8 +12,10 @@ import java.text.DateFormat
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class HomeDaysRecyclerAdapter(date: Int) :RecyclerView.Adapter<HomeDaysRecyclerAdapter.HomeDaysViewHolder>() {
+class HomeDaysRecyclerAdapter(date: Int,listener:OnClick) :RecyclerView.Adapter<HomeDaysRecyclerAdapter.HomeDaysViewHolder>() {
     var date = date
+    var listener = listener
+
     class HomeDaysViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val day: TextView = itemView.findViewById(R.id.day)
         val date: TextView = itemView.findViewById(R.id.date)
@@ -39,11 +41,17 @@ class HomeDaysRecyclerAdapter(date: Int) :RecyclerView.Adapter<HomeDaysRecyclerA
             holder.day.setTextColor(holder.itemView.context.getColor(R.color.black))
         }
         var date = DateFormat.getDateInstance(DateFormat.DEFAULT).format(cal.time)
-        holder.itemView.setOnClickListener {  }
+        holder.background.setOnClickListener {
+            listener.onDayClickListener(date)
+        }
     }
 
     override fun getItemCount(): Int {
         return Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH)
+    }
+
+    interface OnClick {
+        fun onDayClickListener(date: String)
     }
 
 }

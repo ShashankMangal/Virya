@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.Size
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.CameraSelector.LensFacing
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.core.VideoCapture
@@ -41,6 +42,7 @@ class PoseDetectorActivity : AppCompatActivity() {
     private lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var poseDetector: PoseDetector
     private lateinit var cameraProviderFuture : ListenableFuture<ProcessCameraProvider>
+    private var cameraFacing: Int = 0
 
     private lateinit var bitmapBuffer: Bitmap
 
@@ -49,6 +51,7 @@ class PoseDetectorActivity : AppCompatActivity() {
         activityPoseDetectorBinding = ActivityPoseDetectorBinding.inflate(layoutInflater)
         setContentView(activityPoseDetectorBinding.root)
         // Request camera permissions
+        cameraFacing = CameraSelector.LENS_FACING_FRONT
         val yogaPose :String = intent.getStringExtra("yoga").toString()
         setStatusBarColor(Color.parseColor("#000000"))
         Toast.makeText(applicationContext, yogaPose,Toast.LENGTH_SHORT).show()
@@ -59,7 +62,18 @@ class PoseDetectorActivity : AppCompatActivity() {
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )
         }
+        activityPoseDetectorBinding.switchCamera.setOnClickListener(View.OnClickListener {
+            if(cameraFacing == CameraSelector.LENS_FACING_FRONT){
+                cameraFacing = CameraSelector.LENS_FACING_BACK
+            }else{
+                cameraFacing = CameraSelector.LENS_FACING_FRONT
+            }
+            if(cameraProvider!=null && cameraExecutor!=null) {
+                cameraExecutor.shutdown()
+                cameraProvider.unbindAll()
+            }else(startCamera())
 
+        })
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
@@ -73,35 +87,6 @@ class PoseDetectorActivity : AppCompatActivity() {
 
         },ContextCompat.getMainExecutor(this))
 
-//        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-//
-//        cameraProviderFuture.addListener({
-//            // Used to bind the lifecycle of cameras to the lifecycle owner
-//            cameraProvider = cameraProviderFuture.get()
-//
-//            // Preview
-//            val preview = Preview.Builder()
-//                .build()
-//                .also {
-//                    it.setSurfaceProvider(activityPoseDetectorBinding.previewView.surfaceProvider)
-//                }
-//
-//            // Select back camera as a default
-//            val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
-//
-//            try {
-//                // Unbind use cases before rebinding
-//                cameraProvider.unbindAll()
-//
-//                // Bind use cases to camera
-//                cameraProvider.bindToLifecycle(
-//                    this, cameraSelector, preview)
-//
-//            } catch(exc: Exception) {
-//                Log.e(TAG, "Use case binding failed", exc)
-//            }
-//
-//        }, ContextCompat.getMainExecutor(this))
     }
 
     fun setProcessor(){
@@ -177,8 +162,10 @@ class PoseDetectorActivity : AppCompatActivity() {
         preview.setSurfaceProvider(activityPoseDetectorBinding.previewView.surfaceProvider)
 
         val cameraSelector = CameraSelector.Builder()
-            .requireLensFacing(CameraSelector.LENS_FACING_FRONT)
+            .requireLensFacing(cameraFacing)
             .build()
+
+
         val point = Point()
         val size = display?.getRealSize(point)
 
@@ -204,7 +191,7 @@ class PoseDetectorActivity : AppCompatActivity() {
                         }
                         if(it.allPoseLandmarks.isNotEmpty()){
 
-                            Log.d("this is pose",it.getPoseLandmark(PoseLandmark.LEFT_SHOULDER)!!.position.x .toString())
+//                            Log.d("this is pose",it.getPoseLandmark(PoseLandmark.LEFT_SHOULDER)!!.position.x .toString())
 
                             if(activityPoseDetectorBinding.parentLayout.childCount>3){
                                 activityPoseDetectorBinding.parentLayout.removeViewAt(3)
