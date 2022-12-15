@@ -60,7 +60,7 @@ class PoseDetectorActivity : AppCompatActivity() {
             //start camera
             cameraProviderFuture = ProcessCameraProvider.getInstance(this)
             cameraProviderFuture.addListener(Runnable {
-                val cameraProvider = cameraProviderFuture.get()
+                cameraProvider = cameraProviderFuture.get()
                 bindPreview(cameraProvider)
 
             },ContextCompat.getMainExecutor(this))
@@ -79,13 +79,13 @@ class PoseDetectorActivity : AppCompatActivity() {
                 }else{
                     cameraFacing = CameraSelector.LENS_FACING_FRONT
                 }
-                cameraExecutor.shutdown()
                 cameraProvider.unbindAll()
+                cameraExecutor.shutdown()
 
                 //start camera
                 cameraProviderFuture = ProcessCameraProvider.getInstance(this)
                 cameraProviderFuture.addListener(Runnable {
-                    val cameraProvider = cameraProviderFuture.get()
+                    cameraProvider = cameraProviderFuture.get()
                     bindPreview(cameraProvider)
 
                 },ContextCompat.getMainExecutor(this))
