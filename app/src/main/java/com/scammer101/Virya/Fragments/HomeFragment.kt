@@ -169,6 +169,7 @@ class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
 
 
     override fun onDayClickListener(date: String) {
+        Log.v("Homedate", date)
         Toast.makeText(context, date, Toast.LENGTH_SHORT).show()
     }
 
