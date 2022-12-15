@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.scammer101.Virya.Models.UserModel
 import com.scammer101.Virya.R
 import com.scammer101.Virya.Screens.AddDetailsScreen
+import com.scammer101.Virya.Screens.EquipmentScreen
 import com.scammer101.Virya.Screens.NumberScreen
 import com.scammer101.Virya.Utilities.PreferenceManager
 import com.scammer101.Virya.databinding.FragmentProfileBinding
@@ -89,6 +90,11 @@ class ProfileFragment : Fragment() {
         binding.profileLogout.setOnClickListener{
             auth.signOut()
             var intent = Intent(context, NumberScreen::class.java)
+            startActivity(intent)
+        }
+
+        binding.profileEquipmentSelling.setOnClickListener{
+            var intent = Intent(context, EquipmentScreen::class.java)
             startActivity(intent)
         }
 

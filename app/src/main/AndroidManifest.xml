@@ -16,6 +16,13 @@
         android:theme="@style/Theme.Virya"
         tools:targetApi="31">
         <activity
+            android:name=".Screens.EquipmentScreen"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Screens.CustomGoalScreen"
             android:exported="false">
             <meta-data
