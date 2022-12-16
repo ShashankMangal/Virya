@@ -165,7 +165,7 @@ class PoseDetectorActivity : AppCompatActivity() {
         return darkness >= 0.5
     }
     @SuppressLint("RestrictedApi", "UnsafeExperimentalUsageError", "NewApi",
-        "UnsafeOptInUsageError"
+        "UnsafeOptInUsageError", "SetTextI18n"
     )
     private fun bindPreview(cameraProvider: ProcessCameraProvider){
 
@@ -207,22 +207,30 @@ class PoseDetectorActivity : AppCompatActivity() {
                             if(activityPoseDetectorBinding.parentLayout.childCount>3){
                                 activityPoseDetectorBinding.parentLayout.removeViewAt(3)
                             }
-                            val element = Draw(applicationContext,it)
-                            var poseDetectionUtils = PoseDetectionUtils()
-                            var angleList = poseDetectionUtils.pose_angles(it)
-                            Log.v("angleCheck", angleList.toString())
-                            var accuracy = poseDetectionUtils.accuracy_Treepose(angleList)
-                            Log.d("Tree Pose Accuracy:","$accuracy")
-                            runOnUiThread(Runnable {
-                                activityPoseDetectorBinding.accuracy.text = "$accuracy"
-                            })
-                            activityPoseDetectorBinding.parentLayout.addView(element)
+                            var i = 0
+                            var overallLikelyHood = 0f
+                            for (pose in it.allPoseLandmarks){
+                                overallLikelyHood+=pose.inFrameLikelihood
+                                i+=1
+                            }
+                            overallLikelyHood/=i
+                            if(overallLikelyHood>0.5){
+                                val element = Draw(applicationContext,it)
+                                var poseDetectionUtils = PoseDetectionUtils()
+                                var angleList = poseDetectionUtils.pose_angles(it)
+                                Log.v("angleCheck", angleList.toString())
+                                var accuracy = poseDetectionUtils.accuracy_Treepose(angleList)
+                                Log.d("Tree Pose Accuracy:","$accuracy")
+                                runOnUiThread(Runnable {
+                                    activityPoseDetectorBinding.accuracy.visibility = View.VISIBLE
+                                    activityPoseDetectorBinding.accuracy.text = "${accuracy.toInt()}%"
+                                })
+                                activityPoseDetectorBinding.parentLayout.addView(element)
+                            }else{activityPoseDetectorBinding.accuracy.visibility = View.GONE}
                         }
                         imageProxy.close()
                     }
                     .addOnFailureListener{
-
-
                         imageProxy.close()
                     }
             }
