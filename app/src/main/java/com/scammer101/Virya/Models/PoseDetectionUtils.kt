@@ -72,13 +72,15 @@ class PoseDetectionUtils {
         return angle_list.sum().toDouble() * 100 / actual1.sum()
     }
 
-    fun accuracy_Warrior2pose(angle_list: ArrayList<Double>, direction: String = "left"): Double {
+    fun accuracy_Warrior2pose(angle_list: ArrayList<Double>): Double {
         // lea, rea, lsa, rsa, lka, rka, lha, rha
-        val actual1 = arrayListOf(180, 180, 90, 90, 100, 180, 100, 120)     // left
-        val actual2 = arrayListOf(180, 180, 90, 90, 180, 100, 120, 100)     // right
+        val actual1 = arrayListOf(180, 180, 90, 90, 100, 180, 120, 140)     // left
+        val actual2 = arrayListOf(180, 180, 90, 90, 180, 100, 140, 120)     // right
+        var angle_list2 : ArrayList<Double> = angle_list
+        var p1=00.00
+        var p2=00.00
 
         // for right
-        if (direction == "right") {
             for (i in angle_list.indices) {
                 // to do angle_list = 100--->80; actual = 90
                 if (angle_list[i] > actual1[i]) {
@@ -87,23 +89,22 @@ class PoseDetectionUtils {
                 }
             }
 
-            return angle_list.sum().toDouble() * 100 / actual1.sum()
-        }
+            p1 =  angle_list.sum().toDouble() * 100 / actual1.sum()
+
 
         // for left
-        else if (direction == "left") {
-            for (i in angle_list.indices) {
+            for (i in angle_list2.indices) {
                 // to do angle_list = 100--->80; actual = 90
-                if (angle_list[i] > actual2[i]) {
-                    val diff = angle_list[i] - actual2[i]    //diff = 100-90 = 10
-                    angle_list[i] = actual2[i] - diff    //angle_list = 90 - 10 = 80
+                if (angle_list2[i] > actual2[i]) {
+                    val diff = angle_list2[i] - actual2[i]    //diff = 100-90 = 10
+                    angle_list2[i] = actual2[i] - diff    //angle_list = 90 - 10 = 80
                 }
             }
 
-            return angle_list.sum() * 100 / actual2.sum()
-        }
+            p2 =  angle_list2.sum() * 100 / actual2.sum()
 
-        return 0.0
+
+        return Math.max(p1, p2)
     }
 
     fun calculateAngle(a: PoseLandmark, b:PoseLandmark, c:PoseLandmark): Double {
