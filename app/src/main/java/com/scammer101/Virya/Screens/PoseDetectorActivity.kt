@@ -210,6 +210,7 @@ class PoseDetectorActivity : AppCompatActivity() {
                             val element = Draw(applicationContext,it)
                             var poseDetectionUtils = PoseDetectionUtils()
                             var angleList = poseDetectionUtils.pose_angles(it)
+                            Log.v("angleCheck", angleList.toString())
                             var accuracy = poseDetectionUtils.accuracy_Treepose(angleList)
                             Log.d("Tree Pose Accuracy:","$accuracy")
                             runOnUiThread(Runnable {

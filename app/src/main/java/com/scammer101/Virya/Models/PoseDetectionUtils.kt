@@ -1,5 +1,6 @@
 package com.scammer101.Virya.Models
 
+import android.util.Log
 import com.google.mlkit.vision.pose.Pose
 import com.google.mlkit.vision.pose.PoseLandmark
 import kotlin.math.abs
@@ -20,8 +21,10 @@ class PoseDetectionUtils {
 
     fun accuracy_Treepose(angle_list: ArrayList<Double>, direction: String = "left"): Double {
         // lea, rea, lsa, rsa, lka, rka, lha, rha
-        var actual1 = arrayListOf(160, 160, 100, 100, 180, 30, 180, 120)
-        var actual2 = arrayListOf(160, 160, 100, 100, 30, 180, 120, 180)
+        var actual1 = arrayListOf(145, 145, 165, 165, 180, 30, 90, 120)
+        var actual2 = arrayListOf(145, 145, 165, 165, 30, 180, 120, 90)
+        var p1=00.00
+        var p2=00.00
 
         // for right
         if (direction == "right") {
@@ -33,7 +36,7 @@ class PoseDetectionUtils {
                 }
             }
 
-            return angle_list.sum() * 100 / actual1.sum()
+           p1 =  angle_list.sum() * 100 / actual1.sum()
         }
 
         // for left
@@ -46,10 +49,11 @@ class PoseDetectionUtils {
                 }
             }
 
-            return angle_list.sum().toDouble() * 100 / actual2.sum()
+            p2 =  angle_list.sum().toDouble() * 100 / actual2.sum()
         }
-
-        return 0.0
+        Log.d("LargeP", "p1" + p1.toString())
+        Log.d("LargeP", "p2" + p2.toString())
+        return Math.max(p1, p2)
     }
 
     fun accuracy_Tpose(angle_list: ArrayList<Int>): Double {
@@ -67,8 +71,6 @@ class PoseDetectionUtils {
 
         return angle_list.sum().toDouble() * 100 / actual1.sum()
     }
-
-
 
     fun accuracy_Warrior2pose(angle_list: ArrayList<Double>, direction: String = "left"): Double {
         // lea, rea, lsa, rsa, lka, rka, lha, rha
@@ -104,24 +106,18 @@ class PoseDetectionUtils {
         return 0.0
     }
 
-
-
-
-
-
     fun calculateAngle(a: PoseLandmark, b:PoseLandmark, c:PoseLandmark): Double {
-        val angle = Math.toDegrees(
-            atan2((c.position.x - b.position.y).toDouble(),
+        var angle = Math.toDegrees(
+            atan2((c.position.y - b.position.y).toDouble(),
             (c.position.x - b.position.x).toDouble()
         ) - atan2((a.position.y - b.position.y).toDouble(),
             (a.position.x - b.position.x).toDouble()
         )
         )
-        return abs(if (angle > 180.0) 360 - angle else angle)
+        Log.v("angleCheck", angle.toString())
+        angle = abs(angle)
+        return (if (angle > 180.0) 360 - angle else angle)
     }
-
-
-
 
     fun pose_angles(pose:Pose): ArrayList<Double> {
 
@@ -158,12 +154,12 @@ class PoseDetectionUtils {
         // Get the angle between the left hip, right hip and left knee points.
         val lha = calculateAngle(pose.getPoseLandmark(PoseLandmark.LEFT_HIP)!!,
             pose.getPoseLandmark(PoseLandmark.RIGHT_HIP)!!,
-            pose.getPoseLandmark(PoseLandmark.LEFT_KNEE)!!)
+            pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE)!!)
 
         // Get the angle between the right hip,left hip and right knee points
         val rha = calculateAngle(pose.getPoseLandmark(PoseLandmark.RIGHT_HIP)!!,
                 pose.getPoseLandmark(PoseLandmark.LEFT_HIP)!!,
-                pose.getPoseLandmark(PoseLandmark.RIGHT_KNEE)!!)
+                pose.getPoseLandmark(PoseLandmark.LEFT_KNEE)!!)
 
         return arrayListOf(lea, rea, lsa, rsa, lka, rka, lha, rha)
 
