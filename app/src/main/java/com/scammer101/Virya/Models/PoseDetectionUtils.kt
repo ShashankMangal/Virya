@@ -19,7 +19,7 @@ class PoseDetectionUtils {
         }
     }
 
-    fun accuracy_Treepose(angle_list: ArrayList<Double>, direction: String = "left"): Double {
+    fun accuracy_Treepose(angle_list: ArrayList<Double>): Double {
         // lea, rea, lsa, rsa, lka, rka, lha, rha
         var actual1 = arrayListOf(145, 145, 165, 165, 180, 30, 90, 120)
         var actual2 = arrayListOf(145, 145, 165, 165, 30, 180, 120, 90)
@@ -56,9 +56,9 @@ class PoseDetectionUtils {
         return Math.max(p1, p2)
     }
 
-    fun accuracy_Tpose(angle_list: ArrayList<Int>): Double {
+    fun accuracy_Tpose(angle_list: ArrayList<Double>): Double {
         // lea, rea, lsa, rsa, lka, rka, lha, rha
-        var actual1 = arrayListOf(180, 180, 90, 90, 180, 180, 180, 180)
+        var actual1 = arrayListOf(180, 180, 90, 90, 180, 180, 90, 90)
 
         // Condition for percentage > 100
         for (i in angle_list.indices) {
