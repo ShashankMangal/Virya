@@ -25,7 +25,8 @@ class PoseDetectionUtils {
         var actual2 = arrayListOf(145, 145, 165, 165, 30, 180, 120, 90)
         var p1=00.00
         var p2=00.00
-        var angle_list2 : ArrayList<Double> = angle_list
+        var angle_list2 : ArrayList<Double> = arrayListOf()
+        angle_list2.addAll(angle_list)
 
         // for right
 
