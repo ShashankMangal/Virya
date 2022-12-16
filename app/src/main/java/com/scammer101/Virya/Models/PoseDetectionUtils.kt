@@ -25,9 +25,10 @@ class PoseDetectionUtils {
         var actual2 = arrayListOf(145, 145, 165, 165, 30, 180, 120, 90)
         var p1=00.00
         var p2=00.00
+        var angle_list2 : ArrayList<Double> = angle_list
 
         // for right
-        if (direction == "right") {
+
             for (i in angle_list.indices) {
                 // to do angle_list = 100--->80; actual = 90
                 if (angle_list[i] > actual1[i]) {
@@ -37,20 +38,19 @@ class PoseDetectionUtils {
             }
 
            p1 =  angle_list.sum() * 100 / actual1.sum()
-        }
+
 
         // for left
-        else if (direction == "left") {
-            for (i in angle_list.indices) {
+            for (i in angle_list2.indices) {
                 // to do angle_list = 100--->80; actual = 90
-                if (angle_list[i] > actual2[i]) {
-                    var diff = angle_list[i] - actual2[i]    //diff = 100-90 = 10
-                    angle_list[i] = actual2[i] - diff    //angle_list = 90 - 10 = 80
+                if (angle_list2[i] > actual2[i]) {
+                    var diff = angle_list2[i] - actual2[i]    //diff = 100-90 = 10
+                    angle_list2[i] = actual2[i] - diff    //angle_list = 90 - 10 = 80
                 }
             }
 
-            p2 =  angle_list.sum().toDouble() * 100 / actual2.sum()
-        }
+            p2 =  angle_list2.sum().toDouble() * 100 / actual2.sum()
+
         Log.d("LargeP", "p1" + p1.toString())
         Log.d("LargeP", "p2" + p2.toString())
         return Math.max(p1, p2)
