@@ -103,7 +103,7 @@ class ProfileFragment : Fragment() {
                             totalAsanaIsFinished+= dailyModel!!.finished
                         }
                     } catch (e: Exception) {
-                        Toast.makeText(requireContext(), "Error:"+e.message,Toast.LENGTH_SHORT).show()
+
                     }
                 }
                 binding.profileTrainingCompleted.text = totalAsana.toString()
