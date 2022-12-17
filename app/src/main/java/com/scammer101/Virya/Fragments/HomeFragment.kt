@@ -55,7 +55,7 @@ class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
 
         list.add(YogaPose(R.drawable.warrior_2_pose_image_recyclerview, "warrior2pose"))
         list.add(YogaPose(R.drawable.treepose_image_recyclerview, "treepose"))
-        list.add(YogaPose(R.drawable.tpose_image_recyclerview, "tpose"))
+        list.add(YogaPose(R.drawable.tpose_image, "tpose"))
 
         binding.posesRecyclerView.adapter = HomePosesRecyclerAdapter(requireActivity(), list)
         binding.monthNyear.text = buildString {
