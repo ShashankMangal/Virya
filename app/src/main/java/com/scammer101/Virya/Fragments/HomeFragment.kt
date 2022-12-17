@@ -148,7 +148,8 @@ class HomeFragment : Fragment(),HomeDaysRecyclerAdapter.OnClick {
                                 "treePoseCountPose" to 0,
                                 "treePoseCountTimer" to 0,
                                 "date" to date,
-                                "userAndDate" to date+FirebaseAuth.getInstance().uid.toString()
+                                "userAndDate" to date+FirebaseAuth.getInstance().uid.toString(),
+                                "userId" to FirebaseAuth.getInstance().uid.toString()
                             )
                         )
                         setDailyData(0, 0, 0)
