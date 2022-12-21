@@ -315,7 +315,7 @@ class PoseDetectorActivity : AppCompatActivity() {
                                 }
                                 else
                                 {
-                                    accuracy = poseDetectionUtils.accuracy_Treepose(angleList)
+                                    accuracy = poseDetectionUtils.accuracy_Tpose(angleList)
                                     Log.d("Posename", yogaPose.toString())
                                     if(accuracy>=70)
                                     {
